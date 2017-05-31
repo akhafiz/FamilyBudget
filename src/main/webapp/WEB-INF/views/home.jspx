@@ -1,0 +1,21 @@
+<!--
+  Created by IntelliJ IDEA.
+  User: akhafiz
+  Date: 17.05.17
+  Time: 9:22
+  To change this template use File | Settings | File Templates.
+-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns="http://www.w3.org/1999/xhtml" version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core"
+          xmlns:spring="http://www.springframework.org/tags">
+
+    <jsp:directive.page contentType="text/html;charset=UTF-8" isELIgnored="false"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:message var="welcomeMsg" code="welcome"/>
+
+    <div>
+        <h1>Welcome Msg : <c:out value="${welcomeMsg}"/></h1>
+    </div>
+</jsp:root>

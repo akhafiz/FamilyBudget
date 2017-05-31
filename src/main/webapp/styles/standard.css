@@ -1,0 +1,18 @@
+h1 {
+    color: darkblue;
+}
+.layout {
+    background-color: darkgray;
+}
+.header {
+    background-color: indigo;
+}
+.menu {
+    background-color: darkblue;
+}
+.body {
+    background-color: whitesmoke;
+}
+.footer {
+    background-color: indigo;
+}

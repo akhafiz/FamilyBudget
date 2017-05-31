@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<beans:property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+        <!--<beans:property name="prefix" value="/WEB-INF/views/"/>-->
+        <!--<beans:property name="suffix" value=".jspx"/>-->
+    <!--</beans:bean>-->
+    <beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>
+    <beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <beans:property name="definitions">
+            <beans:list>
+                <beans:value>/WEB-INF/tiles.xml</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basenames" value="WEB-INF/i18n/application,WEB-INF/i18n/message"/>
+        <beans:property name="fallbackToSystemLocale" value="false"/>
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
+    <beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <beans:property name="cookieName" value="locale"/>
+        <beans:property name="defaultLocale" value="ru"/>
+    </beans:bean>
+    <beans:bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver">
+        <beans:property name="cookieName" value="theme"/>
+        <beans:property name="defaultThemeName" value="standardTheme"/>
+    </beans:bean>
+    <beans:bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
+    
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="ru.akhafiz.web.controllers"/>
+
+    <mvc:resources mapping="/resources/**" location="/"/>
+    <mvc:resources mapping="/resources/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <mvc:default-servlet-handler/>
+
+    <mvc:interceptors>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <beans:property name="paramName" value="lang"/>
+        </beans:bean>
+        <beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+    </mvc:interceptors>
+    
+</beans:beans>

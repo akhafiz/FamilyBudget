@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <fb_user id="1" login="akhafiz" email="akhafiz@akhafiz.ru" password="akhafiz"/>
+    <fb_user id="2" login="admin" email="admin@admin.ru" password="admin"/>
+</dataset>

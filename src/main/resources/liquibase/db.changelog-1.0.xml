@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+                            http://www.liquibase.org/xml/ns/dbchangelog-ext
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="001" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="FB_USER_ID_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="FB_USER_ID_SEQ"/>
+    </changeSet>
+
+    <changeSet id="002" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FB_USER"/>
+            </not>
+        </preConditions>
+        <createTable tableName="FB_USER">
+            <column name="ID" type="bigint" autoIncrement="true" valueSequenceNext="FB_USER_ID_SEQ">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="LOGIN" type="varchar(50)">
+                <constraints uniqueConstraintName="FB_USER_LOGIN_UNIQUE" unique="true" nullable="false"/>
+            </column>
+            <column name="EMAIL" type="varchar(100)">
+                <constraints uniqueConstraintName="FB_USER_EMAIL_UNIQUE" unique="true" nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="varchar(255)"/>
+            <column name="FIRST_NAME" type="varchar(255)"/>
+            <column name="SECOND_NAME" type="varchar(255)"/>
+            <column name="LAST_NAME" type="varchar(255)"/>
+            <column name="GENDER" type="varchar(1)"/>
+            <column name="IS_ACTIVE" type="boolean" defaultValue="false"/>
+            <column name="REGISTRY_DATE" type="datetime"/>
+            <column name="LAST_ENTER_DATE" type="datetime"/>
+            <column name="ROLE" type="varchar(1)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="FB_FAMILY_ID_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="FB_FAMILY_ID_SEQ"/>
+    </changeSet>
+
+    <changeSet id="004" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FB_FAMILY"/>
+            </not>
+        </preConditions>
+        <createTable tableName="FB_FAMILY">
+            <column name="ID" type="bigint" autoIncrement="true" valueSequenceNext="FB_FAMILY_ID_SEQ">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)"/>
+            <column name="CREATED_DATE" type="datetime"/>
+            <column name="CREATED_USER_LOGIN" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="FB_FAMILY_MEMBER_ID_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="FB_FAMILY_MEMBER_ID_SEQ"/>
+    </changeSet>
+
+    <changeSet id="006" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FB_FAMILY_MEMBER"/>
+            </not>
+        </preConditions>
+        <createTable tableName="FB_FAMILY_MEMBER">
+            <column name="ID" type="bigint" autoIncrement="true" valueSequenceNext="FB_FAMILY_MEMBER_ID_SEQ">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="FAMILY_ID" type="bigint">
+                <constraints nullable="false" foreignKeyName="FK_FB_FAMILY_FB_FAMILY_MEMBER" references="FB_FAMILY(ID)"/>
+            </column>
+            <column name="USER_ID" type="bigint">
+                <constraints foreignKeyName="FK_FB_USER_FB_FAMILY_MEMBER" references="FB_USER(ID)"/>
+            </column>
+            <column name="FIRST_NAME" type="varchar(255)"/>
+            <column name="SECOND_NAME" type="varchar(255)"/>
+            <column name="LAST_NAME" type="varchar(255)"/>
+            <column name="GENDER" type="varchar(1)"/>
+            <column name="EMAIL" type="varchar(100)"/>
+            <column name="CREATED_DATE" type="datetime"/>
+            <column name="CREATED_USER_LOGIN" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="007" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="FB_FAMILY_BUDGET_ID_SEQ"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="FB_FAMILY_BUDGET_ID_SEQ"/>
+    </changeSet>
+
+    <changeSet id="008" author="akhafiz">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="FB_FAMILY_BUDGET"/>
+            </not>
+        </preConditions>
+        <createTable tableName="FB_FAMILY_BUDGET">
+            <column name="ID" type="bigint" autoIncrement="true" valueSequenceNext="FB_FAMILY_BUDGET_ID_SEQ">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="FAMILY_ID" type="bigint">
+                <constraints nullable="false" foreignKeyName="FK_FB_FAMILY_FB_FAMILY_MEMBER" references="FB_FAMILY(ID)" deleteCascade="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+</databaseChangeLog>
+
